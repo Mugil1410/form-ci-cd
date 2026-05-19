@@ -4,6 +4,10 @@ on:
   push:
     branches: [ main ]
 
+# 🔥 ADD THIS (FIXES 403 ERROR)
+permissions:
+  contents: write
+
 jobs:
 
   test:
@@ -36,7 +40,7 @@ jobs:
 
 
   deploy:
-    needs: test   # 🔥 IMPORTANT: only runs if test PASSES
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
