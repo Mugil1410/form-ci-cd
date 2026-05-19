@@ -2,9 +2,16 @@ const { Builder, By, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 
 async function runTest() {
+  let options = new chrome.Options();
+
+  // ✅ Correct headless mode for CI (Chrome 109+ / 148 works)
+  options.addArguments("--headless=new");
+  options.addArguments("--no-sandbox");
+  options.addArguments("--disable-dev-shm-usage");
+
   let driver = await new Builder()
     .forBrowser("chrome")
-    .setChromeOptions(new chrome.Options().headless()) // REQUIRED for CI
+    .setChromeOptions(options)
     .build();
 
   try {
@@ -13,7 +20,7 @@ async function runTest() {
     await driver.wait(until.elementLocated(By.id("name")), 10000);
     await driver.findElement(By.id("name")).sendKeys("Test User");
 
-    await driver.findElement(By.id("mobile")).sendKeys("123"); // invalid mobile
+    await driver.findElement(By.id("mobile")).sendKeys("123");
     await driver.findElement(By.id("pan")).sendKeys("WRONGPAN123");
 
     await driver.findElement(By.id("submit")).click();
@@ -25,6 +32,8 @@ async function runTest() {
 
     const text = await errorEl.getText();
 
+    console.log("Error shown:", text);
+
     if (!text.includes("Invalid Mobile Number")) {
       throw new Error("Validation failed");
     }
@@ -33,7 +42,7 @@ async function runTest() {
 
   } catch (err) {
     console.error("❌ Test Failed:", err);
-    process.exit(1); // 🔥 IMPORTANT: stops deploy
+    process.exit(1);
   } finally {
     await driver.quit();
   }
