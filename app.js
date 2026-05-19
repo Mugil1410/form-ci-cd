@@ -1,5 +1,5 @@
 function validateName(name) {
-    return name.trim().length >= 3;
+    return name && name.trim().length > 2;
 }
 
 function validateMobile(mobile) {
@@ -10,62 +10,26 @@ function validatePAN(pan) {
     return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan);
 }
 
+// main validation function
 function validateForm(name, mobile, pan) {
 
     if (!validateName(name)) {
-        return {
-            valid: false,
-            message: "Invalid Name"
-        };
+        return { valid: false, message: "Invalid Name" };
     }
 
     if (!validateMobile(mobile)) {
-        return {
-            valid: false,
-            message: "Invalid Mobile Number"
-        };
+        return { valid: false, message: "Invalid Mobile" };
     }
 
     if (!validatePAN(pan)) {
-        return {
-            valid: false,
-            message: "Invalid PAN Number"
-        };
+        return { valid: false, message: "Invalid PAN" };
     }
 
-    return {
-        valid: true,
-        message: "Form Submitted Successfully"
-    };
+    return { valid: true, message: "All Valid" };
 }
 
-function submitForm() {
-
-    const name = document.getElementById("name").value;
-
-    const mobile = document.getElementById("mobile").value;
-
-    const pan = document.getElementById("pan").value;
-
-    const result = validateForm(name, mobile, pan);
-
-    const messageDiv = document.getElementById("message");
-
-    if (result.valid) {
-
-        messageDiv.innerHTML =
-            `<div class="success">${result.message}</div>`;
-
-    } else {
-
-        messageDiv.innerHTML =
-            `<div class="error">${result.message}</div>`;
-    }
-}
-
-// export for Node.js testing
+// export for CI (Node.js)
 if (typeof module !== "undefined") {
-
     module.exports = {
         validateName,
         validateMobile,
