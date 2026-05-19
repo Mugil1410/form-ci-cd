@@ -40,7 +40,7 @@ test("Full Valid Form", () =>
 );
 
 test("Full Invalid Form", () =>
-    validateForm("A", "123", "WRONG").valid === false
+    validateForm("A", "123", "ABCDE1234F").valid === false
 );
 
 // REPORT
