@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CI/CD Form</title>
+</head>
+<body>
+
+  <h2>Registration Form</h2>
+
+  <input type="text" id="name" placeholder="Name" />
+  <br><br>
+
+  <input type="text" id="mobile" placeholder="Mobile" />
+  <br><br>
+
+  <input type="text" id="pan" placeholder="PAN Number" />
+  <br><br>
+
+  <button type="button" onclick="submitForm()">Submit</button>
+
+  <script src="app.js"></script>
+
+  <script>
+    function submitForm() {
+      const name = document.getElementById("name").value;
+      const mobile = document.getElementById("mobile").value;
+      const pan = document.getElementById("pan").value;
+
+      const result = validateForm(name, mobile, pan);
+
+      if (result.valid) {
+        console.log("✅ SUCCESS:", result.message);
+      } else {
+        console.log("❌ ERROR:", result.message);
+      }
+    }
+  </script>
+
+</body>
+</html>
