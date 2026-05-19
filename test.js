@@ -36,7 +36,7 @@ test("Invalid PAN", () => validatePAN("12345") === false);
 
 // FULL FORM TEST
 test("Full Valid Form", () =>
-    validateForm("Boohey", "9876543210", "WRONGPAN").valid === true
+    validateForm("Boohey", "9876543210", "ABCDE1234F").valid === true
 );
 
 test("Full Invalid Form", () =>
