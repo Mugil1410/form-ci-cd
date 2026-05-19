@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  hema:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
       - name: Run Tests
         run: npm test
 
-  kanmani:
+  deploy:
     needs: test
 
     runs-on: ubuntu-latest
