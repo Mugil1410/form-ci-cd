@@ -1,13 +1,19 @@
 {
   "name": "form-ci-cd",
   "version": "1.0.0",
-  "scripts": {
-    "test": "node test.js"
-  },
-  "description": "",
+  "description": "CI/CD Selenium Form Testing",
   "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node test.js",
+    "selenium": "node selenium-test.js",
+    "start": "http-server ."
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "selenium-webdriver": "^4.44.0"
+  }
 }
