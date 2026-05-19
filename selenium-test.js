@@ -2,12 +2,15 @@ const { Builder, By, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 
 async function runTest() {
+
   let options = new chrome.Options();
 
-  // ✅ Correct headless mode for CI (Chrome 109+ / 148 works)
   options.addArguments("--headless=new");
   options.addArguments("--no-sandbox");
   options.addArguments("--disable-dev-shm-usage");
+
+  // ✅ IMPORTANT: use system chrome
+  options.setChromeBinaryPath("/usr/bin/google-chrome");
 
   let driver = await new Builder()
     .forBrowser("chrome")
@@ -31,17 +34,16 @@ async function runTest() {
     );
 
     const text = await errorEl.getText();
-
-    console.log("Error shown:", text);
+    console.log("Error:", text);
 
     if (!text.includes("Invalid Mobile Number")) {
-      throw new Error("Validation failed");
+      throw new Error("Test failed");
     }
 
     console.log("✅ Test Passed");
 
   } catch (err) {
-    console.error("❌ Test Failed:", err);
+    console.error("❌ Failed:", err);
     process.exit(1);
   } finally {
     await driver.quit();
